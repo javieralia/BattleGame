@@ -1,0 +1,100 @@
+<html>
+<head>
+<title>Spaceship Game</title>
+<style>
+    canvas {
+      border: 1px solid #000;
+    }
+</style>
+</head>
+<body>
+<canvas id="gameCanvas" width="800" height="600"></canvas>
+
+ 
+
+  <script>
+    // Spaceship object
+    var spaceship = {
+      x: 400,
+      y: 550,
+      width: 40,
+      height: 40
+    };
+
+ 
+
+    // Canvas
+    var canvas = document.getElementById("gameCanvas");
+    var ctx = canvas.getContext("2d");
+
+ 
+
+    // Keyboard event listeners
+    var leftPressed = false;
+    var rightPressed = false;
+
+ 
+
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+
+ 
+
+    function keyDownHandler(event) {
+      if (event.keyCode === 37) {
+        leftPressed = true;
+      } else if (event.keyCode === 39) {
+        rightPressed = true;
+      }
+    }
+
+ 
+
+    function keyUpHandler(event) {
+      if (event.keyCode === 37) {
+        leftPressed = false;
+      } else if (event.keyCode === 39) {
+        rightPressed = false;
+      }
+    }
+
+ 
+
+    // Update game state
+    function update() {
+      if (leftPressed && spaceship.x > 0) {
+        spaceship.x -= 5;
+      } else if (rightPressed && spaceship.x < canvas.width - spaceship.width) {
+        spaceship.x += 5;
+      }
+    }
+
+ 
+
+    // Draw game objects
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw spaceship
+      ctx.beginPath();
+      ctx.rect(spaceship.x, spaceship.y, spaceship.width, spaceship.height);
+      ctx.fillStyle = "#0095DD";
+      ctx.fill();
+      ctx.closePath();
+    }
+
+ 
+
+    // Game loop
+    function gameLoop() {
+      update();
+      draw();
+      requestAnimationFrame(gameLoop);
+    }
+
+ 
+
+    gameLoop();
+</script>
+</body>
+</html>
